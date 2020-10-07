@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Civ5 Diplo Victory</title>
+    <style>
+        html {
+            font-family: sans-serif;
+        }
+        thead, td:first-child {
+            background-color: darkgrey;
+            font-weight: bold;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+<div hidden="hidden">
+    <input type="radio" id="eraChoice1" name="congressEra" value="Renaissance">
+    <label for="eraChoice1">Renaissance</label><br>
+    <input type="radio" id="eraChoice2" name="congressEra" value="Industrial">
+    <label for="eraChoice2">Industrial</label><br>
+    <input type="radio" id="eraChoice3" name="congressEra" value="Modern">
+    <label for="eraChoice3">Modern</label><br>
+    <input type="radio" id="eraChoice4" name="congressEra" value="United Nations" checked="checked">
+    <label for="eraChoice4">United Nations</label><br>
+</div>  
+total civs:<br>
+<input id="NCivs" name="args" type="text" value="6"><br>
+total city-states:<br>
+<input id="NCSs" name="args" type="text" value="12"><br>
+
+</body>
+<script src="script.js"></script>
+</html>
