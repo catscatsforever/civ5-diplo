@@ -18,6 +18,9 @@
         th, td {
             padding: 15px;
         }
+        .selected {
+
+        }
     </style>
 </head>
 <body>
@@ -30,11 +33,11 @@
     <label for="eraChoice3">Modern</label><br>
     <input type="radio" id="eraChoice4" name="congressEra" value="United Nations" checked="checked">
     <label for="eraChoice4">United Nations</label><br>
-</div>  
-total civs:<br>
-<input id="NCivs" name="args" type="text" value="6"><br>
-total city-states:<br>
-<input id="NCSs" name="args" type="text" value="12"><br>
+</div>
+total civs (2-32):<br>
+<input id="NCivs" name="args" type="text" value="6" pattern="[2-9]|[12][0-9]|3[0-2]"><br>
+total city-states (0-64):<br>
+<input id="NCSs" name="args" type="text" value="12" pattern="[0-9]|[12345][0-9]|6[0-4]"><br>
 
 </body>
 <script src="script.js"></script>

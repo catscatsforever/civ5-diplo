@@ -10,6 +10,8 @@ let diplo = {civCount: 0, csCount: 0, civAlive: 0, civNotAlive: 0, csAlive: 0, c
 let text1 = document.getElementById("NCivs");
 let text2 = document.getElementById("NCSs");
 
+text1.addEventListener("input", process);
+text2.addEventListener("input", process);
 
 function getVotesNeededForDiploVictory(fCivsToCount, fCityStatesToCount){
     let fCivVotesPortion = (DIPLO1 * Math.log(fCivsToCount)) + DIPLO2;
@@ -30,31 +32,50 @@ function getVotesNeededForDiploVictory(fCivsToCount, fCityStatesToCount){
 }
 
 function process() {
-    let NCivs = text1.textContent;
-    let NCSs = text1.textContent;
-
+    diplo.civCount = text1.value < 2 ? 2 : text1.value > 32 ? 32 : text1.value;
+    diplo.csCount = text2.value < 0 ? 0 : text2.value > 64 ? 64 : text2.value;
+    generate_table(diplo.civCount, diplo.csCount)
 }
+
 
 function generate_table(nCivs, nCSs) {
     let body = document.getElementsByTagName("body")[0];
 
+    let oldCont = document.getElementsByClassName("container1")[0];
+    oldCont && oldCont.parentNode.removeChild(oldCont);
+
+    let cont = document.createElement("div");
+    cont.className = "container1";
+    let cont2 = document.createElement("div");
     let range1 = document.createElement("input");
     range1.type = "range";
     range1.id = "civConquered";
     range1.name = "rangeField";
-    range1.min = nCivs / 2 + 1;
-    range1.max = nCivs;
-    range1.step = "0.5";
+    range1.min = (nCivs / 2 + 1).toString();
+    range1.max = nCivs.toString();
     let range2 = document.createElement("input");
     range2.type = "range";
     range2.id = "csConquered";
     range2.name = "rangeField";
-    range2.min = "0";
-    range2.max = nCSs;
-    range2.step = "0.5";
+    range2.max = nCSs.toString();
+    let range3 = document.createElement("input");
+    range3.type = "range";
+    range3.id = "csBoughtout";
+    range3.name = "rangeField";
+    range3.max = nCSs.toString();
 
-    body.appendChild(range1);
-    body.appendChild(range2);
+    let out1 = document.createElement("output");
+    out1.htmlFor = range1.id.toString();
+    let out2 = document.createElement("output");
+    out2.htmlFor = range2.id.toString();
+    let out3 = document.createElement("output");
+    out3.htmlFor = range3.id.toString();
+
+    let br = document.createElement("br");
+    cont2.append(range1, "civs conquered: ", out1, document.createElement("br"),
+                 range2, "city-states conquered: ", out2, document.createElement("br"),
+                 range3, "city-states bought out: ", out3);
+    cont.appendChild(cont2);
 
     let tbl = document.createElement("table");
     let tblBody = document.createElement("tbody");
@@ -66,21 +87,21 @@ function generate_table(nCivs, nCSs) {
     let htext = document.createTextNode("");
     hth.appendChild(htext);
     hrow.appendChild(hth);
-    for (let j = 0; j <= 12; j += 0.5) {
+    for (let j = 0; j <= nCSs; j += 0.5) {
         let th = document.createElement("th");
         let text = document.createTextNode(j.toString());
         th.appendChild(text);
         hrow.appendChild(th);
     }
 
-    for (let i = 4; i <= 6; i += 0.5) {
+    for (let i = nCivs / 2 + 1; i <= nCivs; i += 0.5) {
         let row = document.createElement("tr");
         let hcell = document.createElement("td");
         hcell.fontWeight = "bold";
         let hcellText = document.createTextNode(i.toString());
         hcell.appendChild(hcellText);
         row.appendChild(hcell);
-        for (let j = 0; j <= 12; j += 0.5) {
+        for (let j = 0; j <= nCSs; j += 0.5) {
             let cell = document.createElement("td");
             let cellText = document.createTextNode(getVotesNeededForDiploVictory(i, j).toString());
             cell.appendChild(cellText);
@@ -91,6 +112,7 @@ function generate_table(nCivs, nCSs) {
 
     tbl.appendChild(tblHead);
     tbl.appendChild(tblBody);
-    body.appendChild(tbl);
+    cont.appendChild(tbl);
+    body.appendChild(cont);
 }
-generate_table();
+process();
